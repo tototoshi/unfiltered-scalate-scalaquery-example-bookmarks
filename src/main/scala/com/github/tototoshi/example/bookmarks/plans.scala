@@ -7,9 +7,6 @@ import unfiltered.scalate._
 
 import org.fusesource.scalate.{ TemplateEngine, Binding}
 
-import org.scalaquery.session.Session
-import org.scalaquery.ql.basic.BasicDriver.Implicit._
-
 import java.io.File
 
 class BookmarkPlan extends Plan {
@@ -20,8 +17,7 @@ class BookmarkPlan extends Plan {
   def intent = {
 
     case req @ Path(Seg("bookmark" :: "list" :: Nil)) => {
-      val q = for { b <- BookmarkTable } yield b
-      Scalate(req, "list.ssp", "bookmarks" -> BookmarkTable.findAll)
+      Scalate(req, "list.ssp", "bookmarks" -> Bookmark.findAll())
     }
 
     case req @ Path(Seg("bookmark" :: "create" :: Nil)) => req match {
@@ -33,8 +29,8 @@ class BookmarkPlan extends Plan {
           title <- params("title").headOption
           url <- params("url").headOption
         } {
-          db withSession { implicit s: Session =>
-            BookmarkTable.insert(Bookmark(title, url))
+          db autoCommit { session =>
+            session.update("insert into bookmark (title, url) values (?, ?)", title, url)
           }
         }
 
@@ -47,7 +43,4 @@ class BookmarkPlan extends Plan {
     }
 
   }
-
 }
-
-
