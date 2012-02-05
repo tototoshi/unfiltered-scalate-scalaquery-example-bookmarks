@@ -1,0 +1,24 @@
+<%@ val bookmarks: List[com.github.tototoshi.example.bookmarks.Bookmark] %>
+#do(layout("layout.ssp"))
+    <h1>List Bookmarks</h1>
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>
+                TITLE
+            </th>
+            <th>
+                URL
+            </th>
+        </tr>
+
+        #for (b <- bookmarks)
+            <tr>
+                <td>${b.title}</td>
+                <td>${b.url}</td>
+            </tr>
+        #end
+    </table>
+#end
+
+
