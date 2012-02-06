@@ -9,6 +9,9 @@ import org.fusesource.scalate.{ TemplateEngine, Binding}
 
 import java.io.File
 
+import scalikejdbc._
+import LoanPattern._
+
 class BookmarkPlan extends Plan {
 
   /* Display template compilation error message on browser */
@@ -29,8 +32,10 @@ class BookmarkPlan extends Plan {
           title <- params("title").headOption
           url <- params("url").headOption
         } {
-          db autoCommit { session =>
-            session.update("insert into bookmark (title, url) values (?, ?)", title, url)
+          using (ConnectionPool('db1).borrow()) { conn =>
+            new DB(conn) localTx { session =>
+              session.update("insert into bookmark (title, url) values (?, ?)", title, url)
+            }
           }
         }
 

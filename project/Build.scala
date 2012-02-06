@@ -16,6 +16,7 @@ object BookmarkProject extends Build {
       ),
       libraryDependencies ++= Seq(
         "com.github.seratch" %% "scalikejdbc" % "0.2.0" withSources (),
+        "commons-dbcp" % "commons-dbcp" % "1.4",
         "net.databinder" %% "unfiltered-filter" % "0.5.3",
         "net.databinder" %% "unfiltered-jetty" % "0.5.3",
         "org.mortbay.jetty" % "jetty" % "6.1.22" % "container",
