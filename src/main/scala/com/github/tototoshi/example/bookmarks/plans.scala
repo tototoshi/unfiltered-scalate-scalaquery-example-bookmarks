@@ -43,6 +43,17 @@ class BookmarkPlan extends Plan {
       }
     }
 
+    case req @ POST(Path("/bookmark/delete")) & Params(params) => {
+      using (ConnectionPool('db1).borrow()) { conn =>
+        new DB(conn) localTx { session =>
+          params("id").toList.foreach { id =>
+            session.update("delete from bookmark where id = ?", id)
+          }
+        }
+      }
+      Redirect("/bookmark/list")
+    }
+
     case req @ Path("/") => {
       Scalate(req, "index.ssp")
     }

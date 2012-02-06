@@ -2,23 +2,36 @@
 #do(layout("layout.ssp"))
     <h1>List Bookmarks</h1>
 
-    <table class="table table-bordered table-striped">
-        <tr>
-            <th>
-                TITLE
-            </th>
-            <th>
-                URL
-            </th>
-        </tr>
 
-        #for (b <- bookmarks)
+    <form method="POST" id="" action="/bookmark/delete">
+
+        <table class="table table-bordered table-striped">
             <tr>
-                <td>${b.title}</td>
-                <td>${b.url}</td>
+                <th></th>
+                <th>
+                    TITLE
+                </th>
+                <th>
+                    URL
+                </th>
             </tr>
-        #end
-    </table>
+
+            #for (b <- bookmarks)
+                <tr>
+                    <td><input type="checkbox" name="id" value="${b.id}" /></td>
+                    <td>${b.title}</td>
+                    <td>${b.url}</td>
+                </tr>
+            #end
+            <tr>
+                <td><input class="btn" type="submit" name="submit" value="submit" /></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </form>
+
 #end
 
 
