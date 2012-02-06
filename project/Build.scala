@@ -15,7 +15,7 @@ object BookmarkProject extends Build {
         "seratch.github.com releases"  at "http://seratch.github.com/mvn-repo/releases"
       ),
       libraryDependencies ++= Seq(
-        "com.github.seratch" %% "scalikejdbc" % "0.2.0" withSources (),
+        "com.github.seratch" %% "scalikejdbc" % "0.3.0" withSources (),
         "commons-dbcp" % "commons-dbcp" % "1.4",
         "net.databinder" %% "unfiltered-filter" % "0.5.3",
         "net.databinder" %% "unfiltered-jetty" % "0.5.3",

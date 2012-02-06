@@ -9,9 +9,8 @@ object Bookmark {
   def findAll(): List[Bookmark] = using(ConnectionPool('db1).borrow()) { conn =>
     new DB(conn) readOnly { session =>
       session.asList("select * from bookmark") { rs =>
-        Some(Bookmark(rs.getString("title"), rs.getString("url")))
+        (Bookmark(rs.getString("title"), rs.getString("url")))
       }
     }
-
   }
 }
