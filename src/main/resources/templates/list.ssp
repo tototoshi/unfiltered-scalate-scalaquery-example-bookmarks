@@ -3,32 +3,31 @@
     <h1>List Bookmarks</h1>
 
 
-    <form method="POST" id="" action="/bookmark/delete">
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th></th>
+            <th>
+                TITLE
+            </th>
+            <th>
+                URL
+            </th>
+        </tr>
 
-        <table class="table table-bordered table-striped">
+        #for (b <- bookmarks)
             <tr>
-                <th></th>
-                <th>
-                    TITLE
-                </th>
-                <th>
-                    URL
-                </th>
-            </tr>
+                <td>${b.title}</td>
+                <td>${b.url}</td>
+                <td>
+                    <form method="POST" action="/bookmark/delete">
+                        <input type="hidden" name="id" value="${b.id}" />
+                        <input type="submit" name="submit" value="submit" class="btn"/>
+                    </form>
+                </td>
 
-            #for (b <- bookmarks)
-                <tr>
-                    <td><input type="checkbox" name="id" value="${b.id}" /></td>
-                    <td>${b.title}</td>
-                    <td>${b.url}</td>
-                </tr>
-            #end
-            <tr>
-                <td><input class="btn" type="submit" name="submit" value="submit" /></td>
-                <td></td>
-                <td></td>
             </tr>
-        </table>
+        #end
+    </table>
 
     </form>
 

@@ -32,24 +32,17 @@ class BookmarkPlan extends Plan {
           title <- params("title").headOption
           url <- params("url").headOption
         } {
-          using (ConnectionPool('db1).borrow()) { conn =>
-            new DB(conn) localTx { session =>
-              session.update("insert into bookmark (title, url) values (?, ?)", title, url)
-            }
-          }
+          Bookmark.create(title, url)
         }
-
         Redirect("/bookmark/list")
       }
     }
 
-    case req @ POST(Path("/bookmark/delete")) & Params(params) => {
-      using (ConnectionPool('db1).borrow()) { conn =>
-        new DB(conn) localTx { session =>
-          params("id").toList.foreach { id =>
-            session.update("delete from bookmark where id = ?", id)
-          }
-        }
+    case POST(Path(Seg("bookmark" :: "delete" :: Nil))) & Params(params)=> {
+      // TODO Validation
+      params("id").headOption.foreach {
+        case AsInt(id) => Bookmark.delete(id)
+        case _ => throw new Exception
       }
       Redirect("/bookmark/list")
     }
